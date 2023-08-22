@@ -5,12 +5,12 @@ import patternTablet from "../assets/tablet/bg-pattern-header.svg";
 import patternMobile from "../assets/mobile/bg-pattern-header.svg";
 import ThemeSwitcher from "./ThemeSwitcher";
 import logo from "../assets/desktop/logo.svg";
+import SearchBar from "../pages/home/SearchBar";
 
 const Header = () => {
   const context = useContext(Context);
   const [pattern, setPattern] = useState("");
 
-  
   if (!context) {
     throw new Error("Header must be used within a ContextProvider");
   };
@@ -29,13 +29,13 @@ const Header = () => {
 
 
   return (
-    <div className={`w-[100%] h-[136px] md:h-[160px] relative`}>
+    <div className={`${isDarkMode ? "bg-[#121721]" : "bg-[#F4F6F8]"} w-[100%] h-[136px] md:h-[160px] relative`}>
         <img src={pattern} alt="purple background" className="w-[100%] h-[100%]"/>
         <div className="absolute w-[327px] flex justify-between items-center top-[20px] left-1/2 -translate-x-1/2">
           <img src={logo} alt="company logo"/>
           <ThemeSwitcher />
         </div>
-      
+        <SearchBar />
     </div>
   )
 }

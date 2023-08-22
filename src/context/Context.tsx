@@ -3,6 +3,8 @@ import { createContext, useState, ReactNode, useEffect } from "react";
 export type ContextType = {
     isDarkMode: boolean;
     screenSize: string;
+    setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>
+    toggleDarkMode: () => void;
 }
 
 const Context = createContext<ContextType | undefined>(undefined);
@@ -16,6 +18,10 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const [screenSize, setScreenSize] = useState("");
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+    const toggleDarkMode = ():void => {
+        setIsDarkMode(prevMode => !prevMode)
+    };
+
     useEffect(() => {
      const handleResize = () => {
         setScreenWidth(window.innerWidth)
@@ -26,6 +32,10 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
      return () => (
         window.removeEventListener("resize", handleResize)
      );
+    });
+
+    useEffect(() => {
+        console.log(isDarkMode)
     })
 
     useEffect(() => {
@@ -41,6 +51,8 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const contextValue: ContextType = {
         isDarkMode: isDarkMode,
         screenSize: screenSize,
+        setIsDarkMode: setIsDarkMode,
+        toggleDarkMode: toggleDarkMode,
     };
 
     return (
