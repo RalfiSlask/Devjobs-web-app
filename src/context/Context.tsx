@@ -5,7 +5,7 @@ export type ContextType = {
     screenSize: string;
     setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>
     toggleDarkMode: () => void;
-}
+};
 
 const Context = createContext<ContextType | undefined>(undefined);
 
@@ -33,10 +33,6 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         window.removeEventListener("resize", handleResize)
      );
     });
-
-    useEffect(() => {
-        console.log(isDarkMode)
-    })
 
     useEffect(() => {
         if(screenWidth < 772) {
