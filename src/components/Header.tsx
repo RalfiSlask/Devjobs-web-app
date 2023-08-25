@@ -5,7 +5,6 @@ import patternTablet from "../assets/tablet/bg-pattern-header.svg";
 import patternMobile from "../assets/mobile/bg-pattern-header.svg";
 import ThemeSwitcher from "./ThemeSwitcher";
 import logo from "../assets/desktop/logo.svg";
-import SearchBar from "../pages/home/SearchBar";
 
 const Header = () => {
   const context = useContext(Context);
@@ -25,8 +24,7 @@ const Header = () => {
     } else if(screenSize === "desktop") {
       setPattern(patternDesktop)
     }
-  })
-
+  });
 
   return (
     <div className={`${isDarkMode ? "bg-[#121721]" : "bg-[#F4F6F8]"} w-[100%] h-[136px] md:h-[160px] relative`}>
@@ -35,7 +33,6 @@ const Header = () => {
           <img src={logo} alt="company logo"/>
           <ThemeSwitcher />
         </div>
-        <SearchBar />
     </div>
   )
 }

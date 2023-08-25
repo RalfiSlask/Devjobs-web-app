@@ -1,10 +1,16 @@
 import { createContext, useState, ReactNode, useEffect } from "react";
+import { Job } from "../pages/home/Job";
+import data from "../data/data.json";
 
 export type ContextType = {
     isDarkMode: boolean;
     screenSize: string;
-    setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>
+    selectedJob: Job | null;
+    dataList: Job[];
+    setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setSelectedJob: React.Dispatch<React.SetStateAction<Job | null>>;
     toggleDarkMode: () => void;
+    showAllJobsOnClick:  (text: string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => void;
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
@@ -17,10 +23,38 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [screenSize, setScreenSize] = useState("");
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+    const [dataList, setDataList] = useState<Job[]>([]);
+
+    const reduceList = (array: Job[]) => {
+        setDataList(array.filter((object, index) => index < 12))
+    };
+
+    useEffect(() => {
+        reduceList(data);
+    }, [])
+
+    useEffect(() => {
+        console.log(selectedJob)
+    })
+
+    const showAllJobsOnClick = (text:string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => {
+        if(text === "Load More") {
+            setDataList(data)
+            setButtonText("Show Less")
+        } else if(text === "Show Less") {
+            reduceList(data);
+            setButtonText("Load More")
+        };
+    };
 
     const toggleDarkMode = ():void => {
         setIsDarkMode(prevMode => !prevMode)
     };
+
+    useEffect(() => {
+        console.log(selectedJob)
+    })
 
     useEffect(() => {
      const handleResize = () => {
@@ -29,9 +63,9 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
 
      window.addEventListener("resize", handleResize)
 
-     return () => (
-        window.removeEventListener("resize", handleResize)
-     );
+     return () => {
+        window.removeEventListener("resize", handleResize);
+     };
     });
 
     useEffect(() => {
@@ -45,10 +79,17 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     }, [screenWidth])
 
     const contextValue: ContextType = {
+        // states
         isDarkMode: isDarkMode,
         screenSize: screenSize,
+        selectedJob: selectedJob,
+        dataList: dataList,
+        // setters
+        setSelectedJob: setSelectedJob,
         setIsDarkMode: setIsDarkMode,
+        // functions
         toggleDarkMode: toggleDarkMode,
+        showAllJobsOnClick: showAllJobsOnClick,
     };
 
     return (
