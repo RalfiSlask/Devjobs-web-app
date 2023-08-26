@@ -19,8 +19,8 @@ const Devjob = () => {
         <Header />
         <CompanyInfo />
       </header>
-      <main>
-
+      <main className={`${isDarkMode ? "bg-[#121721]" : "bg-[#F4F6F8]"} flex flex-col items-center`}>
+        <section className={`${isDarkMode ? "bg-[#19202D]" : "bg-white"} rounded-[6px] py-[40px] px-[24px] md:px-[48px] md:py-[48px]`}></section>
       </main>
     </>
   )
