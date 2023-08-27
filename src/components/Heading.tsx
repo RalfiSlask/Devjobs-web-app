@@ -3,9 +3,10 @@ import Context from "../context/Context";
 
 type PropsType = {
     text: string;
+    style?: string;
 };
 
-const Heading:React.FC<PropsType> = ( {text} ) => {
+const Heading:React.FC<PropsType> = ( {text, style} ) => {
     const context = useContext(Context);
 
     if(!context) {
@@ -15,7 +16,7 @@ const Heading:React.FC<PropsType> = ( {text} ) => {
     const { isDarkMode } = context;
 
   return (
-    <h2 className={`${isDarkMode ? "text-[white]" : "text-[black]"} font-bold text-[20px]`}>{text}</h2>
+    <h2 className={`${isDarkMode ? "text-[white]" : "text-[black]"} font-bold text-[20px] md:text-[${style}]`}>{text}</h2>
   )
 }
 

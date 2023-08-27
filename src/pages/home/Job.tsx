@@ -16,11 +16,11 @@ export type Job = {
       website: string;
       apply: string;
       description: string;
-      requirements: {
+      requirements?: {
           content: string;
           items: string[]
       };
-      role: {
+      role?: {
         content: string;
         items: string[]
       };

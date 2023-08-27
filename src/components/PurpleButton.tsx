@@ -9,10 +9,6 @@ type PurpleButtonProps = {
 
 const PurpleButton: React.FC<PurpleButtonProps> = ( {text, width, handleClick} ) => {
   const [buttonText, setButtonText] = useState(text);
-  
-  useEffect(() => {
-    console.log(buttonText)
-  })
 
   return (
     <button onClick={() => {if(handleClick) {handleClick(buttonText, setButtonText)}}} className={`${width ? width : "w-[141px]"} h-[48px] rounded-[5px] text-white bg-[#5964E0] hover:bg-[#939BF4] cursor-pointer text-center text-[16px] font-bold leading-normal`}>{buttonText}</button>

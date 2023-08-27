@@ -7,10 +7,12 @@ export type ContextType = {
     screenSize: string;
     selectedJob: Job | null;
     dataList: Job[];
+    fulltimeActive: boolean;
     setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedJob: React.Dispatch<React.SetStateAction<Job | null>>;
     toggleDarkMode: () => void;
     showAllJobsOnClick:  (text: string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => void;
+    handleClickOnFullTime: () => void;
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
@@ -25,6 +27,7 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [selectedJob, setSelectedJob] = useState<Job | null>(null);
     const [dataList, setDataList] = useState<Job[]>([]);
+    const [fulltimeActive, setFullTimeActive] = useState(false);
 
     const reduceList = (array: Job[]) => {
         setDataList(array.filter((object, index) => index < 12))
@@ -35,8 +38,19 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     }, [])
 
     useEffect(() => {
-        console.log(selectedJob)
-    })
+        const storedJob = JSON.parse(localStorage.getItem("job") || "null");
+        if(storedJob) {
+            setSelectedJob(storedJob)
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("job", JSON.stringify(selectedJob))
+    }, [selectedJob]);
+
+    const handleClickOnFullTime = ():void => {
+        setFullTimeActive(prevState => !prevState)
+    };
 
     const showAllJobsOnClick = (text:string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => {
         if(text === "Load More") {
@@ -51,10 +65,6 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const toggleDarkMode = ():void => {
         setIsDarkMode(prevMode => !prevMode)
     };
-
-    useEffect(() => {
-        console.log(selectedJob)
-    })
 
     useEffect(() => {
      const handleResize = () => {
@@ -84,12 +94,14 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         screenSize: screenSize,
         selectedJob: selectedJob,
         dataList: dataList,
+        fulltimeActive: fulltimeActive,
         // setters
         setSelectedJob: setSelectedJob,
         setIsDarkMode: setIsDarkMode,
         // functions
         toggleDarkMode: toggleDarkMode,
         showAllJobsOnClick: showAllJobsOnClick,
+        handleClickOnFullTime: handleClickOnFullTime,
     };
 
     return (
