@@ -13,8 +13,8 @@ const SearchButton = () => {
 
 
   return (
-    <div className={`w-[48px] md:w-[80px] h-[48px] bg-[#5964E0] flex items-center justify-center rounded-[5px] hover:bg-[#939BF4]`}>
-        {screenSize === "mobile" ? <SearchLogo className="fill-white"/> : <p className="font-bold text-white cursor-pointer">Search</p>}
+    <div className={`w-[48px] md:w-[80px] h-[48px] bg-[#5964E0] flex items-center justify-center rounded-[5px] hover:bg-[#939BF4] cursor-pointer flex-shrink-0`}>
+        {screenSize === "mobile" ? <SearchLogo className="fill-white"/> : <p className="font-bold text-white">Search</p>}
     </div>
   )
 }

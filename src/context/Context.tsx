@@ -8,11 +8,14 @@ export type ContextType = {
     selectedJob: Job | null;
     dataList: Job[];
     fulltimeActive: boolean;
+    modalOpen: {modal: boolean, lightbox: boolean};
     setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedJob: React.Dispatch<React.SetStateAction<Job | null>>;
     toggleDarkMode: () => void;
     showAllJobsOnClick:  (text: string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => void;
     handleClickOnFullTime: () => void;
+    openModal: () => void;
+    closeModal: () => void;
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
@@ -28,10 +31,7 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const [selectedJob, setSelectedJob] = useState<Job | null>(null);
     const [dataList, setDataList] = useState<Job[]>([]);
     const [fulltimeActive, setFullTimeActive] = useState(false);
-
-    const reduceList = (array: Job[]) => {
-        setDataList(array.filter((object, index) => index < 12))
-    };
+    const [modalOpen, setModalOpen] = useState({modal: false, lightbox: false});
 
     useEffect(() => {
         reduceList(data);
@@ -48,25 +48,7 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         localStorage.setItem("job", JSON.stringify(selectedJob))
     }, [selectedJob]);
 
-    const handleClickOnFullTime = ():void => {
-        setFullTimeActive(prevState => !prevState)
-    };
-
-    const showAllJobsOnClick = (text:string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => {
-        if(text === "Load More") {
-            setDataList(data)
-            setButtonText("Show Less")
-        } else if(text === "Show Less") {
-            reduceList(data);
-            setButtonText("Load More")
-        };
-    };
-
-    const toggleDarkMode = ():void => {
-        setIsDarkMode(prevMode => !prevMode)
-    };
-
-    useEffect(() => {
+        useEffect(() => {
      const handleResize = () => {
         setScreenWidth(window.innerWidth)
      };
@@ -82,11 +64,42 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         if(screenWidth < 772) {
             setScreenSize("mobile")
         } else if(screenWidth < 1280) {
+            closeModal();
             setScreenSize("tablet")
         } else {
             setScreenSize("desktop")
         }
-    }, [screenWidth])
+    }, [screenWidth]);
+
+    const handleClickOnFullTime = ():void => {
+        setFullTimeActive(prevState => !prevState)
+    };
+
+    const showAllJobsOnClick = (text:string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => {
+        if(text === "Load More") {
+            setDataList(data)
+            setButtonText("Show Less")
+        } else if(text === "Show Less") {
+            reduceList(data);
+            setButtonText("Load More")
+        };
+    };
+
+    const reduceList = (array: Job[]) => {
+        setDataList(array.filter((object, index) => index < 12))
+    };
+
+    const toggleDarkMode = ():void => {
+        setIsDarkMode(prevMode => !prevMode)
+    };
+
+    const openModal = ():void => {
+        setModalOpen({modal: true, lightbox: true})
+    };
+
+    const closeModal = ():void => {
+        setModalOpen({modal: false, lightbox: false})
+    };
 
     const contextValue: ContextType = {
         // states
@@ -95,6 +108,7 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         selectedJob: selectedJob,
         dataList: dataList,
         fulltimeActive: fulltimeActive,
+        modalOpen: modalOpen,
         // setters
         setSelectedJob: setSelectedJob,
         setIsDarkMode: setIsDarkMode,
@@ -102,6 +116,8 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         toggleDarkMode: toggleDarkMode,
         showAllJobsOnClick: showAllJobsOnClick,
         handleClickOnFullTime: handleClickOnFullTime,
+        openModal: openModal,
+        closeModal: closeModal,
     };
 
     return (

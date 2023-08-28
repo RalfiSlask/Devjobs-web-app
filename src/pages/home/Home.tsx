@@ -4,6 +4,8 @@ import Context from "../../context/Context";
 import Job from "./Job";
 import PurpleButton from "../../components/PurpleButton";
 import SearchBar from "./SearchBar";
+import Lightbox from "./Lightbox";
+import Modal from "./Modal";
 
 const Home = () => {
   const context = useContext(Context);
@@ -12,7 +14,8 @@ const Home = () => {
     throw new Error("does not exist in contextprovider")
   };
 
-  const { isDarkMode, dataList, showAllJobsOnClick } = context;
+  const { isDarkMode, dataList, showAllJobsOnClick, modalOpen } = context;
+  const { modal, lightbox} = modalOpen;
 
   return (
     <>
@@ -30,6 +33,8 @@ const Home = () => {
           <PurpleButton text={"Load More"} width={"w-[141px]"} handleClick={showAllJobsOnClick}/>
         </section>
       </main>
+      {lightbox && <Lightbox />}
+      {modal && <Modal />}
     </>
   
   )

@@ -51,7 +51,7 @@ const Job:React.FC<PropsType> = ( {job} ) => {
   return (
     <div onClick={handleClick} className={`${isDarkMode ? "bg-[#19202D]" : "bg-[white]"} flex flex-col justify-between w-[327px] md:w-[339px] xl:w-[350px] h-[228px] rounded-[6px] relative text-[16px] font-normal leading-normal px-[32px] pt-[49px] pb-[36px] cursor-pointer`}>
         <div className="h-[85px] flex flex-col justify-between">
-            <div style={{backgroundColor: color}} className={`w-[50px] h-[50px] rounded-[15px] absolute top-[-25px] z-50 flex items-center justify-center`}>
+            <div style={{backgroundColor: color}} className={`w-[50px] h-[50px] rounded-[15px] absolute top-[-25px] z-10 flex items-center justify-center`}>
             <img src={logo} alt="company"/>
             </div>
             <div>
