@@ -8,14 +8,17 @@ export type ContextType = {
     selectedJob: Job | null;
     dataList: Job[];
     fulltimeActive: boolean;
+    inputs: {location: string, title: string}
     modalOpen: {modal: boolean, lightbox: boolean};
     setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedJob: React.Dispatch<React.SetStateAction<Job | null>>;
+    setInputs: React.Dispatch<React.SetStateAction<{location: string, title: string}>>;
     toggleDarkMode: () => void;
     showAllJobsOnClick:  (text: string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => void;
     handleClickOnFullTime: () => void;
     openModal: () => void;
     closeModal: () => void;
+    filterList: () => void;
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
@@ -29,12 +32,13 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const [screenSize, setScreenSize] = useState("");
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-    const [dataList, setDataList] = useState<Job[]>([]);
+    const [dataList, setDataList] = useState<Job[]>(data);
     const [fulltimeActive, setFullTimeActive] = useState(false);
     const [modalOpen, setModalOpen] = useState({modal: false, lightbox: false});
+    const [inputs, setInputs] = useState({location: "", title: ""});
 
     useEffect(() => {
-        reduceList(data);
+        reduceList(dataList);
     }, [])
 
     useEffect(() => {
@@ -75,6 +79,8 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         setFullTimeActive(prevState => !prevState)
     };
 
+    
+
     const showAllJobsOnClick = (text:string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => {
         if(text === "Load More") {
             setDataList(data)
@@ -101,6 +107,24 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         setModalOpen({modal: false, lightbox: false})
     };
 
+   const filterList = ():void => {
+        const {title, location} = inputs;
+        const lowerTitle = title.toLocaleLowerCase();
+        const lowerLocation = location.toLocaleLowerCase();
+        let filteredList = data;
+        filteredList = filteredList.filter(job => {
+            const company = job.company.toLowerCase();
+            const position = job.position.toLowerCase();
+            const jobLocation = job.location.toLowerCase();
+            return (
+                (lowerTitle === "" || company.includes(lowerTitle) || position.includes(lowerTitle)) &&
+                (lowerLocation === "" ||jobLocation.includes(lowerLocation)) &&
+                (!fulltimeActive || job.contract === "Full Time")
+            )
+        });
+        setDataList(filteredList)
+    }; 
+
     const contextValue: ContextType = {
         // states
         isDarkMode: isDarkMode,
@@ -109,6 +133,8 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         dataList: dataList,
         fulltimeActive: fulltimeActive,
         modalOpen: modalOpen,
+        inputs: inputs,
+        setInputs: setInputs,
         // setters
         setSelectedJob: setSelectedJob,
         setIsDarkMode: setIsDarkMode,
@@ -118,6 +144,7 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
         handleClickOnFullTime: handleClickOnFullTime,
         openModal: openModal,
         closeModal: closeModal,
+        filterList: filterList,
     };
 
     return (

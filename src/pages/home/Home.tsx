@@ -1,5 +1,5 @@
 import Header from "../../components/Header"
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Context from "../../context/Context";
 import Job from "./Job";
 import PurpleButton from "../../components/PurpleButton";
