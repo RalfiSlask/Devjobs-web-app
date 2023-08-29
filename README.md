@@ -1,4 +1,4 @@
-# Frontend Mentor - Devjobs-Web-App
+# Devjobs-Web-App
 
 ![Devjobs-Web-App](./preview.png)
 
