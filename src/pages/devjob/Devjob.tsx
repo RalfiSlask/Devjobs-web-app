@@ -1,12 +1,12 @@
 import Header from "../../components/Header";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import PurpleButton from "../../components/PurpleButton";
 import Context from "../../context/Context";
-import CompanyInfo from "./CompanyInfo";
-import FooterInfo from "./FooterInfo";
-import Requirments from "./Requirments";
-import WhatYouWillDo from "./WhatYouWillDo";
-import JobInfo from "./JobInfo";
+import CompanyInfo from "./ui/CompanyInfo";
+import FooterInfo from "./ui/FooterInfo";
+import Requirments from "./ui/Requirments";
+import WhatYouWillDo from "./ui/WhatYouWillDo";
+import JobInfo from "./ui/JobInfo";
 
 
 const Devjob = () => {

@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 type PurpleButtonProps = {
     width?: string;
     text: string;

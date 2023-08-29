@@ -1,6 +1,6 @@
-import Heading from "../../components/Heading";
-import Textarea from "../../components/Textarea";
-import List from "./List";
+import Heading from "../../../components/Heading";
+import Textarea from "./Textarea";
+import List from "../List";
 
 type PropsType = {
     requirements?: {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import Context from "../../context/Context";
-import Heading from "../../components/Heading";
+import Context from "../../../context/Context";
+import Heading from "../../../components/Heading";
 import CompanySiteButton from "./CompanySiteButton";
 
 const CompanyInfo = () => {

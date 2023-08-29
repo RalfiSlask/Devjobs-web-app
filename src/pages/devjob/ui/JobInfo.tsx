@@ -1,17 +1,12 @@
-import { Job } from "../home/Job";
-import { useEffect } from "react";
-import Heading from "../../components/Heading";
-import PurpleButton from "../../components/PurpleButton";
+import { Job } from "../../home/Job";
+import Heading from "../../../components/Heading";
+import PurpleButton from "../../../components/PurpleButton";
 
 type PropsType = {
     job: Job | null;
 };
 
 const JobInfo:React.FC<PropsType> = ( {job} ) => {
-
-    useEffect(() => {
-        console.log(job)
-    })
 
     const { postedAt = "", contract = "", position = "", location = "" } = job ||{};
 

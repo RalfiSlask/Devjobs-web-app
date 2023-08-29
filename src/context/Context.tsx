@@ -78,9 +78,7 @@ export const ContextProvider = ( {children}: ContextProviderType ) => {
     const handleClickOnFullTime = ():void => {
         setFullTimeActive(prevState => !prevState)
     };
-
-    
-
+   
     const showAllJobsOnClick = (text:string, setButtonText: React.Dispatch<React.SetStateAction<string>>) => {
         if(text === "Load More") {
             setDataList(data)

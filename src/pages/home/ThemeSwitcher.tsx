@@ -1,7 +1,7 @@
-import iconSun from "../assets/desktop/icon-sun.svg";
-import iconMoon from "../assets/desktop/icon-moon.svg";
+import iconSun from "../../assets/desktop/icon-sun.svg";
+import iconMoon from "../../assets/desktop/icon-moon.svg";
 import { useContext } from "react";
-import Context from "../context/Context";
+import Context from "../../context/Context";
 
 const ThemeSwitcher = () => {
   const context = useContext(Context)
